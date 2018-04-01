@@ -1,0 +1,7 @@
+*.dll
+bin
+.dll
+dll
+obj/*
+bin/*
+*.pyc
