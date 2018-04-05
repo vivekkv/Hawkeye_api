@@ -25,20 +25,20 @@ namespace hawkeye_api.Controllers
         public IActionResult RecentFiles([FromBody]RequestIdentity identity)
         {
             var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.pathfinder));
-            
-            IEnumerable<FileActivity> data = null;
+            var query = string.Format("SELECT \"LogTime\", \"Username\", \"FileName\", \"FilePath\", \"Action\" from " +
+                            "pathfinder.path_finder_activity WHERE \"workspace_uuid\"='{0}' AND  \"LogTime\" >= {1} AND \"LogTime\" <= {2}", 
+                            identity.WorkspaceId, identity.StartDate, identity.EndDate);
 
-            if(identity.SensorId == null) {
-
-                data = mapper.Fetch<FileActivity>("SELECT \"LogTime\", \"Username\", \"FileName\", \"FilePath\", \"Action\" from "+
-                            "pathfinder.path_finder_activity WHERE workspace_uuid={0} LIMIT 10 ALLOW FILTERING", identity.WorkspaceId);
-            } else {
-                
-                
+            if (!string.IsNullOrEmpty(identity.SensorId))
+            {
+                query += string.Format(" AND \"sensor_uuid\"='{0}'", identity.SensorId);
             }
 
-            if(data != null) {
+            query += " LIMIT 10 ALLOW FILTERING";
+            var data = mapper.Fetch<FileActivity>(query);
 
+            if (data != null)
+            {
                 return Ok(data);
             }
 
