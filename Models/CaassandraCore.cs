@@ -35,6 +35,7 @@ namespace hawkeye_api.Models
         public List<Row> GetData(string query, KeySpaces keyspace)
         {
             List<Row> result=new List<Row>();
+            
             try
             {
                 var session = this.GeSession(keyspace);
