@@ -38,3 +38,13 @@ D:\apvera\Hawkeye_api\obj\Debug\netcoreapp2.0\hawkeye_api.AssemblyInfoInputs.cac
 D:\apvera\Hawkeye_api\obj\Debug\netcoreapp2.0\hawkeye_api.AssemblyInfo.cs
 D:\apvera\Hawkeye_api\obj\Debug\netcoreapp2.0\hawkeye_api.dll
 D:\apvera\Hawkeye_api\obj\Debug\netcoreapp2.0\hawkeye_api.pdb
+C:\APVERA\Hawkeye_api\bin\Debug\netcoreapp2.0\hawkeye_api.deps.json
+C:\APVERA\Hawkeye_api\bin\Debug\netcoreapp2.0\hawkeye_api.runtimeconfig.json
+C:\APVERA\Hawkeye_api\bin\Debug\netcoreapp2.0\hawkeye_api.runtimeconfig.dev.json
+C:\APVERA\Hawkeye_api\bin\Debug\netcoreapp2.0\hawkeye_api.dll
+C:\APVERA\Hawkeye_api\bin\Debug\netcoreapp2.0\hawkeye_api.pdb
+C:\APVERA\Hawkeye_api\obj\Debug\netcoreapp2.0\hawkeye_api.csproj.CoreCompileInputs.cache
+C:\APVERA\Hawkeye_api\obj\Debug\netcoreapp2.0\hawkeye_api.AssemblyInfoInputs.cache
+C:\APVERA\Hawkeye_api\obj\Debug\netcoreapp2.0\hawkeye_api.AssemblyInfo.cs
+C:\APVERA\Hawkeye_api\obj\Debug\netcoreapp2.0\hawkeye_api.dll
+C:\APVERA\Hawkeye_api\obj\Debug\netcoreapp2.0\hawkeye_api.pdb
