@@ -27,7 +27,7 @@ namespace hawkeye_api.Controllers
         {
             var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.hawkeye));
             var query = string.Format("SELECT \"event_timestamp\", \"BytesReceived\", \"BytesSent\", \"Speed\", \"TimeStamp\"  from " +
-                            "hawkeye.hawkeye_network WHERE \"workspace_uuid\"='{0}' AND \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}", 
+                            "hawkeye.hawkeye_network WHERE \"workspace_uuid\"='{0}' AND \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}",
                             identity.WorkspaceId, identity.StartDate, identity.EndDate);
 
             if (!string.IsNullOrEmpty(identity.SensorId))
@@ -46,13 +46,13 @@ namespace hawkeye_api.Controllers
             return NoContent();
         }
 
-         [HttpPost]
+        [HttpPost]
         [Route("cpu")]
         public IActionResult Cpu([FromBody]RequestIdentity identity)
         {
             var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.hawkeye));
             var query = string.Format("SELECT \"Name\", \"MaxClockSpeed\", \"ThreadCount\", \"NumberOfCores\", \"AddressWidth\"  from " +
-                            "hawkeye.hawkeye_processor WHERE \"workspace_uuid\"='{0}' AND \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}", 
+                            "hawkeye.hawkeye_processor WHERE \"workspace_uuid\"='{0}' AND \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}",
                             identity.WorkspaceId, identity.StartDate, identity.EndDate);
 
             if (!string.IsNullOrEmpty(identity.SensorId))
@@ -71,14 +71,13 @@ namespace hawkeye_api.Controllers
             return NoContent();
         }
 
-        
-         [HttpPost]
+        [HttpPost]
         [Route("process")]
         public IActionResult Process([FromBody]RequestIdentity identity)
         {
             var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.hawkeye));
             var query = string.Format("SELECT \"Name\", \"Computer\" from " +
-                            "hawkeye.hawkeye_process WHERE \"workspace_uuid\"='{0}' AND \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}", 
+                            "hawkeye.hawkeye_process WHERE \"workspace_uuid\"='{0}' AND \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}",
                             identity.WorkspaceId, identity.StartDate, identity.EndDate);
 
             if (!string.IsNullOrEmpty(identity.SensorId))
@@ -96,5 +95,31 @@ namespace hawkeye_api.Controllers
 
             return NoContent();
         }
+
+        [HttpPost]
+        [Route("application")]
+        public IActionResult Application([FromBody]RequestIdentity identity)
+        {
+            var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.hawkeye));
+            var query = string.Format("SELECT \"Name\" from " +
+                            "hawkeye.hawkeye_application WHERE \"workspace_uuid\"='{0}' AND \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}",
+                            identity.WorkspaceId, identity.StartDate, identity.EndDate);
+
+            if (!string.IsNullOrEmpty(identity.SensorId))
+            {
+                query += string.Format(" AND \"sensor_uuid\"='{0}'", identity.SensorId);
+            }
+
+            query += " LIMIT 10 ALLOW FILTERING";
+            var data = mapper.Fetch<Application>(query);
+
+            if (data != null)
+            {
+                return Ok(data);
+            }
+
+            return NoContent();
+        }
+
     }
 }
