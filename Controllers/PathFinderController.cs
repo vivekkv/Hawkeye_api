@@ -11,7 +11,7 @@ namespace hawkeye_api.Controllers
     using Cassandra.Mapping;
     using hawkeye_api.Models.DbModels;
 
-    [Route("api/[controller]")]
+    [Route("api/pathfinder")]
     public class PathFinderController : Controller
     {
         private readonly ICassandraCore _cassandraCore;
@@ -22,27 +22,37 @@ namespace hawkeye_api.Controllers
         }
 
         [HttpPost]
+        [Route("recentfiles")]
         public IActionResult RecentFiles([FromBody]RequestIdentity identity)
         {
-            var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.pathfinder));
-            var query = string.Format("SELECT \"LogTime\", \"Username\", \"FileName\", \"FilePath\", \"Action\" from " +
-                            "pathfinder.path_finder_activity WHERE \"workspace_uuid\"='{0}' AND  \"LogTime\" >= {1} AND \"LogTime\" <= {2}", 
-                            identity.WorkspaceId, identity.StartDate, identity.EndDate);
-
-            if (!string.IsNullOrEmpty(identity.SensorId))
+            try
             {
-                query += string.Format(" AND \"sensor_uuid\"='{0}'", identity.SensorId);
+
+                var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.pathfinder));
+                var query = string.Format("SELECT \"LogTime\", \"Username\", \"FileName\", \"FilePath\", \"Action\" from " +
+                                "pathfinder.path_finder_activity WHERE \"workspace_uuid\"='{0}' AND  \"LogTime\" >= {1} AND \"LogTime\" <= {2}",
+                                identity.WorkspaceId, identity.StartDate, identity.EndDate);
+
+                if (!string.IsNullOrEmpty(identity.SensorId))
+                {
+                    query += string.Format(" AND \"sensor_uuid\"='{0}'", identity.SensorId);
+                }
+
+                query += " LIMIT 10 ALLOW FILTERING";
+                var data = mapper.Fetch<FileActivity>(query);
+
+                if (data != null)
+                {
+                    return Ok(data);
+                }
+
+                return NoContent();
             }
-
-            query += " LIMIT 10 ALLOW FILTERING";
-            var data = mapper.Fetch<FileActivity>(query);
-
-            if (data != null)
+            catch (Exception ex)
             {
-                return Ok(data);
+                Console.WriteLine(ex.Message);
+                return NoContent();
             }
-
-            return NoContent();
         }
     }
 }
