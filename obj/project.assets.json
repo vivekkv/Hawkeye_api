@@ -12705,23 +12705,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vivek\\.nuget\\packages\\": {},
+    "C:\\Users\\Vivek\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\APVERA\\Hawkeye_api\\hawkeye_api.csproj",
+      "projectUniqueName": "d:\\apvera\\Hawkeye_api\\hawkeye_api.csproj",
       "projectName": "hawkeye_api",
-      "projectPath": "C:\\APVERA\\Hawkeye_api\\hawkeye_api.csproj",
-      "packagesPath": "C:\\Users\\vivek\\.nuget\\packages\\",
-      "outputPath": "C:\\APVERA\\Hawkeye_api\\obj\\",
+      "projectPath": "d:\\apvera\\Hawkeye_api\\hawkeye_api.csproj",
+      "packagesPath": "C:\\Users\\Vivek\\.nuget\\packages\\",
+      "outputPath": "d:\\apvera\\Hawkeye_api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\vivek\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Vivek\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
@@ -12768,5 +12768,13 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file d:\\apvera\\Hawkeye_api\\obj\\hawkeye_api.csproj.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
