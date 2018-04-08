@@ -25,50 +25,72 @@ namespace hawkeye_api.Controllers
         [Route("bandwidth")]
         public IActionResult Bandwidth([FromBody]RequestIdentity identity)
         {
-            var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.hawkeye));
-            var query = string.Format("SELECT \"event_timestamp\", \"BytesReceived\", \"BytesSent\", \"Speed\", \"TimeStamp\"  from " +
-                            "hawkeye.hawkeye_network WHERE \"workspace_uuid\"='{0}' AND \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}",
-                            identity.WorkspaceId, identity.StartDate, identity.EndDate);
-
-            if (!string.IsNullOrEmpty(identity.SensorId))
+            try
             {
-                query += string.Format(" AND \"sensor_uuid\"='{0}'", identity.SensorId);
+
+                var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.hawkeye));
+                var query = string.Format("SELECT \"event_timestamp\", \"BytesReceived\", \"BytesSent\", \"Speed\", \"TimeStamp\"  from " +
+                                "hawkeye.hawkeye_network WHERE \"workspace_uuid\"='{0}' AND \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}",
+                                identity.WorkspaceId, identity.StartDate, identity.EndDate);
+
+                if (!string.IsNullOrEmpty(identity.SensorId))
+                {
+                    query += string.Format(" AND \"sensor_uuid\"='{0}'", identity.SensorId);
+                }
+
+                query += " LIMIT 10 ALLOW FILTERING";
+                var data = mapper.Fetch<BandWidth>(query);
+
+                if (data != null)
+                {
+                    return Ok(data);
+                }
+
+                return NoContent();
+
             }
 
-            query += " LIMIT 10 ALLOW FILTERING";
-            var data = mapper.Fetch<BandWidth>(query);
-
-            if (data != null)
+            catch (Exception ex)
             {
-                return Ok(data);
-            }
 
-            return NoContent();
+                Console.WriteLine(ex);
+                return NoContent();
+            }
         }
 
         [HttpPost]
         [Route("cpu")]
         public IActionResult Cpu([FromBody]RequestIdentity identity)
         {
-            var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.hawkeye));
-            var query = string.Format("SELECT \"Name\", \"MaxClockSpeed\", \"ThreadCount\", \"NumberOfCores\", \"AddressWidth\"  from " +
-                            "hawkeye.hawkeye_processor WHERE \"workspace_uuid\"='{0}' AND \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}",
-                            identity.WorkspaceId, identity.StartDate, identity.EndDate);
-
-            if (!string.IsNullOrEmpty(identity.SensorId))
+            try
             {
-                query += string.Format(" AND \"sensor_uuid\"='{0}'", identity.SensorId);
+
+                var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.hawkeye));
+                var query = string.Format("SELECT \"Name\", \"MaxClockSpeed\", \"ThreadCount\", \"NumberOfCores\", \"AddressWidth\"  from " +
+                                "hawkeye.hawkeye_processor WHERE \"workspace_uuid\"='{0}' AND \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}",
+                                identity.WorkspaceId, identity.StartDate, identity.EndDate);
+
+                if (!string.IsNullOrEmpty(identity.SensorId))
+                {
+                    query += string.Format(" AND \"sensor_uuid\"='{0}'", identity.SensorId);
+                }
+
+                query += " LIMIT 10 ALLOW FILTERING";
+                var data = mapper.Fetch<Processor>(query);
+
+                if (data != null)
+                {
+                    return Ok(data);
+                }
+
+                return NoContent();
             }
-
-            query += " LIMIT 10 ALLOW FILTERING";
-            var data = mapper.Fetch<Processor>(query);
-
-            if (data != null)
+            catch (Exception ex)
             {
-                return Ok(data);
-            }
 
-            return NoContent();
+                Console.WriteLine(ex);
+                return NoContent();
+            }
         }
 
 
@@ -174,7 +196,7 @@ namespace hawkeye_api.Controllers
             }
         }
 
-         [HttpPost]
+        [HttpPost]
         [Route("resource")]
         public IActionResult getResource([FromBody]RequestIdentity identity)
         {
