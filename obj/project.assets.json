@@ -12711,11 +12711,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\apvera\\Hawkeye_api\\hawkeye_api.csproj",
+      "projectUniqueName": "D:\\apvera\\Hawkeye_api\\hawkeye_api.csproj",
       "projectName": "hawkeye_api",
-      "projectPath": "d:\\apvera\\Hawkeye_api\\hawkeye_api.csproj",
+      "projectPath": "D:\\apvera\\Hawkeye_api\\hawkeye_api.csproj",
       "packagesPath": "C:\\Users\\Vivek\\.nuget\\packages\\",
-      "outputPath": "d:\\apvera\\Hawkeye_api\\obj\\",
+      "outputPath": "D:\\apvera\\Hawkeye_api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -27,10 +27,9 @@ namespace hawkeye_api.Controllers
         {
             try
             {
-
                 var mapper = new Mapper(_cassandraCore.GeSession(KeySpaces.pathfinder));
-                var query = string.Format("SELECT \"LogTime\", \"Username\", \"FileName\", \"FilePath\", \"Action\" from " +
-                                "pathfinder.path_finder_activity WHERE \"workspace_uuid\"='{0}' AND  \"LogTime\" >= {1} AND \"LogTime\" <= {2}",
+                var query = string.Format("SELECT \"Username\", \"FileName\", \"Action\" from " +
+                                "pathfinder.pathfinder_activity_workspace WHERE \"workspace_uuid\"='{0}' AND  \"event_timestamp\" >= {1} AND \"event_timestamp\" <= {2}",
                                 identity.WorkspaceId, identity.StartDate, identity.EndDate);
 
                 if (!string.IsNullOrEmpty(identity.SensorId))
